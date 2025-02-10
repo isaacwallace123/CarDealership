@@ -22,5 +22,3 @@ CREATE TABLE IF NOT EXISTS customers (
     phone_number VARCHAR(15),
     phone_type VARCHAR(20)
 );
-
-
