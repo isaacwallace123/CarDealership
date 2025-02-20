@@ -1,21 +1,28 @@
 services:
-  socialmedia:
-    build: .
+  cardealership:
+    build:
+      context: .
+      dockerfile: Dockerfile
     hostname: cardealership
     ports:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    volumes:
+      - logs:/app/logs
+    restart: always
     depends_on:
       mysql1:
         condition: service_healthy
+    privileged: true
 
   mysql1:
-    image: mysql:5.7
+    image: mysql:8.0
+    container_name: cardealership-db
     ports:
       - "3307:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=rootpwd
+      - MYSQL_ROOT_PASSWORD=pwd
       - MYSQL_DATABASE=cardealership-db
       - MYSQL_USER=user
       - MYSQL_PASSWORD=pwd
@@ -47,3 +54,6 @@ services:
       - 5013:80
     environment:
       - PMA_ARBITRARY=1
+
+volumes:
+  logs:

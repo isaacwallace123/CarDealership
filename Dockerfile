@@ -1,13 +1,17 @@
-FROM gradle:7.4 as builder
+FROM gradle:8.12.1-jdk17-corretto AS builder
 WORKDIR /usr/src/app
+
+COPY build.gradle settings.gradle ./
+RUN gradle --refresh-dependencies dependencies --no-daemon --info --stacktrace
+
 COPY src ./src
-COPY build.gradle .
-RUN ["gradle", "bootJar"]
+RUN gradle bootJar --no-daemon
+
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+
+COPY --from=builder /usr/src/app/build/libs/*.jar app.jar
 
 EXPOSE 8080
 
-FROM openjdk:17
-ARG JAR_FILE=build/libs/*.jar
-COPY --from=builder /usr/src/app/${JAR_FILE} app.jar
-
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
