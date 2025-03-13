@@ -26,41 +26,41 @@ public class CustomerImpl implements CustomerService {
         this.customerRequestMapper = customerRequestMapper;
     }
 
-    public List<CustomerResponseModel> getAllEmployees() {
+    public List<CustomerResponseModel> getAllCustomers() {
         return this.customerResponseMapper.entityListToResponseModelList(this.customerRepository.findAll());
     }
 
-    public CustomerResponseModel getEmployeeById(String employeeid) {
-        Customer customer = this.customerRepository.findCustomerByCustomerIdentifier_Customerid(employeeid);
+    public CustomerResponseModel getCustomerById(String customerid) {
+        Customer customer = this.customerRepository.findCustomerByCustomerIdentifier_Customerid(customerid);
 
         if (customer == null) {
-            throw new InvalidInputException("Unknown customerid: " + employeeid);
+            throw new InvalidInputException("Unknown customerid: " + customerid);
         }
 
         return this.customerResponseMapper.entityToResponseModel(customer);
     }
 
-    public CustomerResponseModel addEmployee(CustomerRequestModel customerRequestModel) {
+    public CustomerResponseModel addCustomer(CustomerRequestModel customerRequestModel) {
         Customer newCustomer = this.customerRequestMapper.requestModelToEntity(customerRequestModel, new CustomerIdentifier());
 
         return customerResponseMapper.entityToResponseModel(newCustomer);
     }
 
-    public CustomerResponseModel editEmployee(String customerId, CustomerRequestModel customerRequestModel) {
+    public CustomerResponseModel editCustomer(String customerId, CustomerRequestModel customerRequestModel) {
         Customer customer = this.customerRepository.findCustomerByCustomerIdentifier_Customerid(customerId);
 
         if (customer == null) {
             throw new InvalidInputException("Unknown customerid: " + customerId);
         }
 
-        Customer updatedEmployee = this.customerRequestMapper.requestModelToEntity(customerRequestModel, customer.getCustomerIdentifier());
+        Customer updatedCustomer = this.customerRequestMapper.requestModelToEntity(customerRequestModel, customer.getCustomerIdentifier());
 
-        this.customerRepository.save(updatedEmployee);
+        this.customerRepository.save(updatedCustomer);
 
-        return this.customerResponseMapper.entityToResponseModel(updatedEmployee);
+        return this.customerResponseMapper.entityToResponseModel(updatedCustomer);
     }
 
-    public void deleteEmployee(String customerid) {
+    public void deleteCustomer(String customerid) {
         Customer customer = this.customerRepository.findCustomerByCustomerIdentifier_Customerid(customerid);
 
         if (customer == null) {

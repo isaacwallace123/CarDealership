@@ -6,9 +6,9 @@ import org.isaacwallace.cardealership.Customer.Presentation.Models.CustomerRespo
 import java.util.List;
 
 public interface CustomerService {
-    public List<CustomerResponseModel> getAllEmployees();
-    public CustomerResponseModel getEmployeeById(String employeeid);
-    public CustomerResponseModel addEmployee(CustomerRequestModel employeeRequestModel);
-    public CustomerResponseModel editEmployee(String employeeid, CustomerRequestModel employeeRequestModel);
-    public void deleteEmployee(String employeeid);
+    public List<CustomerResponseModel> getAllCustomers();
+    public CustomerResponseModel getCustomerById(String customerid);
+    public CustomerResponseModel addCustomer(CustomerRequestModel customerRequestModel);
+    public CustomerResponseModel editCustomer(String customerid, CustomerRequestModel customerRequestModel);
+    public void deleteCustomer(String customerid);
 }
